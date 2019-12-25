@@ -26,9 +26,9 @@ namespace ComptageTirAPI.Controllers
         }
 
         [HttpGet("Connect/{username}/{password}")]
-        public string Connect(string username, string password)
+        public void Connect(string username, string password)
         {
-            _archeryService.
+            
         }
 
         [HttpGet("testadd")]
