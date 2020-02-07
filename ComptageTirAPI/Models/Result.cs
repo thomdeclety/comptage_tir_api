@@ -12,9 +12,10 @@ namespace ComptageTirAPI.Models
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
         public string Id { get; set; }
+        public string Owner { get; set; }
         public string Date { get; set; }
         public string Location { get; set; }
-        public string Context { get; set; }
+        public bool Competition { get; set; }
         public List<List<int>> Arrows { get; set; }
     }
 }

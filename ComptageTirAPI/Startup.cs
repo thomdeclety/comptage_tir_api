@@ -28,13 +28,12 @@ namespace ComptageTirAPI
         {
             services.AddControllers();
 
-            services.AddCors(options =>
+            services.AddCors(o => o.AddPolicy("MyPolicy", builder =>
             {
-                options.AddPolicy("CorsPolicy",
-                    builder => builder.AllowAnyOrigin()
-                    .AllowAnyMethod()
-                    .AllowAnyHeader());
-            });
+                builder.AllowAnyOrigin()
+                       .AllowAnyMethod()
+                       .AllowAnyHeader();
+            }));
 
             services.AddScoped<ArcheryService>();
         }
@@ -53,12 +52,12 @@ namespace ComptageTirAPI
 
             app.UseAuthorization();
 
+            app.UseCors("MyPolicy");
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
             });
-
-            app.UseCors("CorsPolicy");
         }
     }
 }

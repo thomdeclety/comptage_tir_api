@@ -2,14 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using ComptageTirAPI.Models;
 using ComptageTirAPI.Services;
 using Microsoft.AspNetCore.Mvc;
 
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-
 namespace ComptageTirAPI.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api")]
     public class ArcheryController : Controller
     {
         private readonly ArcheryService _archeryService;
@@ -18,43 +17,39 @@ namespace ComptageTirAPI.Controllers
         {
             _archeryService = feminaService;
         }
-        // GET: api/<controller>
-        [HttpGet]
-        public IEnumerable<string> Get()
+
+        #region Account
+        [HttpGet("{username}/{password}/connect")]
+        public string Connect(string username, string password)
         {
-            return new string[] { "value1", "value2" };
+            return _archeryService.Connect(username, password);
+        }
+        #endregion
+
+        #region Serie
+        [HttpGet("GetSeries/{username}/{filter}")]
+        public List<Result> GetSeries(string username, string filter)
+        {
+            return _archeryService.GetResults(username, filter);
         }
 
-        [HttpGet("Connect/{username}/{password}")]
-        public void Connect(string username, string password)
+        [HttpGet("GetLastSerie/{username}")]
+        public Result GetLastSerie(string username)
         {
-            
+            return _archeryService.GetLastResult(username);
         }
 
-        [HttpGet("testadd")]
-        public string TestAdd()
+        [HttpGet("test")]
+        public string Test(string username)
         {
-            _archeryService.AddAccount("thomas" , "test");
-
-            return "ok";
+            return "yessssssss";
         }
 
-        // POST api/<controller>
-        [HttpPost]
-        public void Post([FromBody]string value)
+        [HttpPost("AddSerie")]
+        public void GetSeries([FromBody] Result result)
         {
+            _archeryService.AddResult(result);
         }
-
-        // PUT api/<controller>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody]string value)
-        {
-        }
-
-        // DELETE api/<controller>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
-        }
+        #endregion
     }
 }
