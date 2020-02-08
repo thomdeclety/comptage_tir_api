@@ -56,6 +56,8 @@ namespace ComptageTirAPI.Services
         #region Results
         public void AddResult(Result result)
         {
+            var temp = result.Date;
+
             _results.InsertOne(result);
         }
         
