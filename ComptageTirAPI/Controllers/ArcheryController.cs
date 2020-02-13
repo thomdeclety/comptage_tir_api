@@ -24,6 +24,13 @@ namespace ComptageTirAPI.Controllers
         {
             return _archeryService.Connect(username, password);
         }
+
+        [HttpDelete("DeleteSerie")]
+        public void DeleteAccount([FromBody] string id)
+        {
+            _archeryService.DeleteAccount(id);
+        }
+
         #endregion
 
         #region Serie
@@ -39,16 +46,22 @@ namespace ComptageTirAPI.Controllers
             return _archeryService.GetLastResult(username);
         }
 
-        [HttpGet("test")]
-        public string Test(string username)
-        {
-            return "yessssssss";
-        }
-
         [HttpPost("AddSerie")]
-        public void GetSeries([FromBody] Result result)
+        public void AddSerie([FromBody] Result result)
         {
             _archeryService.AddResult(result);
+        }
+
+        [HttpDelete("DeleteSerie")]
+        public void DeleteSerie([FromBody] string id)
+        {
+            _archeryService.DeleteResult(id);
+        }
+
+        [HttpGet("test")]
+        public string test()
+        {
+            return "ok";
         }
         #endregion
     }

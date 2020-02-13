@@ -84,13 +84,17 @@ namespace ComptageTirAPI.Services
                         return result;
                     }
             }
-
         }
 
         public Result GetLastResult(string user)
         {
             var temp = _results.Find(r => r.Owner == user).ToList();
-            return temp.Count == 0 ? null : temp.OrderBy(r => r.Date).ToList().Last();
+            return temp.Count == 0 ? null : temp.Last();
+        }
+
+        public void DeleteResult(string id)
+        {
+            _results.DeleteOne(r => r.Id == id);
         }
         #endregion
     }
