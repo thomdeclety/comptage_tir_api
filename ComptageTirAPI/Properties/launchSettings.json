@@ -19,7 +19,8 @@
     },
     "ComptageTirAPI": {
       "commandName": "Project",
-      "launchUrl": "weatherforecast",
+      "launchBrowser": true,
+      "launchUrl": "archery",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },

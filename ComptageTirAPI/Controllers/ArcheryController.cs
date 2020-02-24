@@ -8,8 +8,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace ComptageTirAPI.Controllers
 {
-    [Route("api")]
-    public class ArcheryController : Controller
+    [ApiController]
+    [Route("[controller]")]
+    public class ArcheryController : ControllerBase
     {
         private readonly ArcheryService _archeryService;
 
@@ -25,7 +26,7 @@ namespace ComptageTirAPI.Controllers
             return _archeryService.Connect(username, password);
         }
 
-        [HttpDelete("DeleteSerie")]
+        [HttpDelete("DeleteAccount")]
         public void DeleteAccount([FromBody] string id)
         {
             _archeryService.DeleteAccount(id);
