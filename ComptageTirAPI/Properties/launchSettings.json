@@ -19,7 +19,6 @@
     },
     "ComptageTirAPI": {
       "commandName": "Project",
-      "launchBrowser": true,
       "launchUrl": "archery",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"

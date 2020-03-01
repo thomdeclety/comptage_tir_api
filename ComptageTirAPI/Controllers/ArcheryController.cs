@@ -9,14 +9,14 @@ using Microsoft.AspNetCore.Mvc;
 namespace ComptageTirAPI.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("")]
     public class ArcheryController : ControllerBase
     {
         private readonly ArcheryService _archeryService;
 
-        public ArcheryController(ArcheryService feminaService)
+        public ArcheryController(ArcheryService archeryService)
         {
-            _archeryService = feminaService;
+            _archeryService = archeryService;
         }
 
         #region Account
@@ -35,10 +35,10 @@ namespace ComptageTirAPI.Controllers
         #endregion
 
         #region Serie
-        [HttpGet("GetSeries/{username}/{filter}")]
-        public List<Result> GetSeries(string username, string filter)
+        [HttpGet("GetSeries/{username}/{range}/{location}/{date}")]
+        public List<Result> GetSeries(string username, string range, string location, string date)
         {
-            return _archeryService.GetResults(username, filter);
+            return _archeryService.GetResults(username, range, location, date);    
         }
 
         [HttpGet("GetLastSerie/{username}")]
@@ -57,12 +57,6 @@ namespace ComptageTirAPI.Controllers
         public void DeleteSerie([FromBody] string id)
         {
             _archeryService.DeleteResult(id);
-        }
-
-        [HttpGet("test")]
-        public string test()
-        {
-            return "ok";
         }
         #endregion
     }

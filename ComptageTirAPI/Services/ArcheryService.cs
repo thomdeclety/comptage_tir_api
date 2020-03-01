@@ -61,29 +61,42 @@ namespace ComptageTirAPI.Services
             _results.InsertOne(result);
         }
         
-        public List<Result> GetResults(string user, string filter)
+        public List<Result> GetResults(string user, string range, string location, string date)
         {
             List<Result> result = _results.Find(r => r.Owner == user).ToList();
-            DateTime time = DateTime.Now;
-            switch (filter)
+            if (range != "toutes" && range != "none")
             {
-                case "1week":
-                    {
-                        return result.Where(r => time - Convert.ToDateTime(r.Date) <= TimeSpan.FromDays(7)).ToList();
-                    }
-                case "1month":
-                    {
-                        return result.Where(r => time - Convert.ToDateTime(r.Date) <= TimeSpan.FromDays(30)).ToList();
-                    }
-                case "3month":
-                    {
-                        return result.Where(r => time - Convert.ToDateTime(r.Date) <= TimeSpan.FromDays(90)).ToList();
-                    }
-                default:
-                    {
-                        return result;
-                    }
+                DateTime time = DateTime.Now;
+                switch (range)
+                {
+                    case "7 jours":
+                        {
+                            result = result.Where(r => time - Convert.ToDateTime(r.Date) <= TimeSpan.FromDays(7)).ToList();
+                        }
+                        break;
+                    case "1 mois":
+                        {
+                            result = result.Where(r => time - Convert.ToDateTime(r.Date) <= TimeSpan.FromDays(30)).ToList();
+                        }
+                        break;
+                    case "3 mois":
+                        {
+                            result = result.Where(r => time - Convert.ToDateTime(r.Date) <= TimeSpan.FromDays(90)).ToList();
+                        }
+                        break;
+                }
             }
+            if (location != "none")
+            {
+                result = result.Where(r => r.Location.Contains(location)).ToList();
+            }
+            if (date != "none")
+            {
+                date = date.Replace('-', '/');
+                result = result.Where(r => r.Date.Contains(date)).ToList();
+            }
+
+            return result;
         }
 
         public Result GetLastResult(string user)
