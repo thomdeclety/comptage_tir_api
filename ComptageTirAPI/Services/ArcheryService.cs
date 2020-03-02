@@ -77,17 +77,17 @@ namespace ComptageTirAPI.Services
                 {
                     case "7jours":
                         {
-                            result = result.Where(r => time - Convert.ToDateTime(r.Date) <= TimeSpan.FromDays(7)).ToList();
+                            result = result.Where(r => time - DateTime.ParseExact(r.Date, "dd/MM/yyyy", null) <= TimeSpan.FromDays(7)).ToList();
                         }
                         break;
                     case "1mois":
                         {
-                            result = result.Where(r => time - Convert.ToDateTime(r.Date) <= TimeSpan.FromDays(30)).ToList();
+                            result = result.Where(r => time - DateTime.ParseExact(r.Date, "dd/MM/yyyy", null) <= TimeSpan.FromDays(30)).ToList();
                         }
                         break;
                     case "3mois":
                         {
-                            result = result.Where(r => time - Convert.ToDateTime(r.Date) <= TimeSpan.FromDays(90)).ToList();
+                            result = result.Where(r => time - DateTime.ParseExact(r.Date, "dd/MM/yyyy", null) <= TimeSpan.FromDays(90)).ToList();
                         }
                         break;
                 }
@@ -103,7 +103,7 @@ namespace ComptageTirAPI.Services
             }
 
             result.Reverse();
-            return result;
+            return result;           
         }
 
         public Result GetLastResult(string user)
