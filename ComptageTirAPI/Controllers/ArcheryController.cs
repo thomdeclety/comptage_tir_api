@@ -35,10 +35,10 @@ namespace ComptageTirAPI.Controllers
         #endregion
 
         #region Serie
-        [HttpGet("GetSeries/{username}/{range}/{location}/{date}")]
-        public List<Result> GetSeries(string username, string range, string location, string date)
+        [HttpGet("GetSeries/{username}/{range}/{location}/{date}/{competition}")]
+        public List<Result> GetSeries(string username, string range, string location, string date, bool competition)
         {
-            return _archeryService.GetResults(username, range, location, date);    
+            return _archeryService.GetResults(username, range, location, date, competition);
         }
 
         [HttpGet("GetLastSerie/{username}")]

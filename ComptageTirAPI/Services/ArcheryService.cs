@@ -61,25 +61,31 @@ namespace ComptageTirAPI.Services
             _results.InsertOne(result);
         }
         
-        public List<Result> GetResults(string user, string range, string location, string date)
+        public List<Result> GetResults(string user, string range, string location, string date, bool competition)
         {
             List<Result> result = _results.Find(r => r.Owner == user).ToList();
+
+            if (competition)
+            {
+                result = result.Where(r => r.Competition).ToList();
+            }
+
             if (range != "toutes" && range != "none")
             {
                 DateTime time = DateTime.Now;
                 switch (range)
                 {
-                    case "7 jours":
+                    case "7jours":
                         {
                             result = result.Where(r => time - Convert.ToDateTime(r.Date) <= TimeSpan.FromDays(7)).ToList();
                         }
                         break;
-                    case "1 mois":
+                    case "1mois":
                         {
                             result = result.Where(r => time - Convert.ToDateTime(r.Date) <= TimeSpan.FromDays(30)).ToList();
                         }
                         break;
-                    case "3 mois":
+                    case "3mois":
                         {
                             result = result.Where(r => time - Convert.ToDateTime(r.Date) <= TimeSpan.FromDays(90)).ToList();
                         }
@@ -96,6 +102,7 @@ namespace ComptageTirAPI.Services
                 result = result.Where(r => r.Date.Contains(date)).ToList();
             }
 
+            result.Reverse();
             return result;
         }
 
