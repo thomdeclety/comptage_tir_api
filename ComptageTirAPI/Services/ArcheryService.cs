@@ -106,6 +106,32 @@ namespace ComptageTirAPI.Services
             return result;           
         }
 
+        public Result GetSummary(List<Result> results)
+        {
+            if (results.Count < 2)
+            {
+                return results.Count == 1 ? results[0] : null;
+            }
+            else
+            {
+                Result r = new Result()
+                {
+                    Owner = results[0].Owner,
+                    Arrows = new List<List<int>>()
+                };
+
+                results.OrderBy(r => r.Arrows.Count);
+                results.Reverse();
+                foreach (var result in results)
+                {
+                    for (int i = 0; i < results[0].Arrows.Count; i++)
+                    {
+
+                    }
+                }
+            }
+        }
+
         public Result GetLastResult(string user)
         {
             var temp = _results.Find(r => r.Owner == user).ToList();

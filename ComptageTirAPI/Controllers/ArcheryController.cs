@@ -41,6 +41,12 @@ namespace ComptageTirAPI.Controllers
             return _archeryService.GetResults(username, range, location, date, competition);
         }
 
+        [HttpGet("GetSeries/{username}/{range}/{location}/{date}/{competition}")]
+        public Result GetSummary(string username, string range, string location, string date, bool competition)
+        {
+            return _archeryService.GetSummary(_archeryService.GetResults(username, range, location, date, competition));
+        }
+
         [HttpGet("GetLastSerie/{username}")]
         public Result GetLastSerie(string username)
         {
@@ -53,8 +59,8 @@ namespace ComptageTirAPI.Controllers
             _archeryService.AddResult(result);
         }
 
-        [HttpDelete("DeleteSerie")]
-        public void DeleteSerie([FromBody] string id)
+        [HttpDelete("DeleteSerie/{id}")]
+        public void DeleteSerie(string id)
         {
             _archeryService.DeleteResult(id);
         }
