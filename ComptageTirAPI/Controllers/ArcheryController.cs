@@ -41,8 +41,8 @@ namespace ComptageTirAPI.Controllers
             return _archeryService.GetResults(username, range, location, date, competition);
         }
 
-        [HttpGet("GetSeries/{username}/{range}/{location}/{date}/{competition}")]
-        public Result GetSummary(string username, string range, string location, string date, bool competition)
+        [HttpGet("GetSummary/{username}/{range}/{location}/{date}/{competition}")]
+        public List<int> GetSummary(string username, string range, string location, string date, bool competition)
         {
             return _archeryService.GetSummary(_archeryService.GetResults(username, range, location, date, competition));
         }
