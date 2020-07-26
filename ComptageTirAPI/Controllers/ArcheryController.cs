@@ -34,6 +34,34 @@ namespace ComptageTirAPI.Controllers
 
         #endregion
 
+        #region Spec
+
+        [HttpGet("{username}/getspec")]
+        public List<ArrowSpec> GetSpecs(string username)
+        {
+            return _archeryService.GetSpecs(username);
+        }
+
+        [HttpPost("addspec")]
+        public void AddSpec([FromBody]ArrowSpec spec)
+        {
+            _archeryService.AddSpec(spec);
+        }
+
+        [HttpPost("modifyspec")]
+        public void ModifySpec([FromBody] ArrowSpec spec)
+        {
+            _archeryService.ModifySpec(spec);
+        }
+
+        [HttpDelete("deletespec/{id}")]
+        public void DeleteSpec(string id)
+        {
+            _archeryService.DeleteSpec(id);
+        }
+
+        #endregion
+
         #region Serie
         [HttpGet("GetSeries/{username}/{range}/{location}/{date}/{competition}")]
         public List<Result> GetSeries(string username, string range, string location, string date, bool competition)

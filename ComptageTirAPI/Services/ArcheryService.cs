@@ -12,6 +12,7 @@ namespace ComptageTirAPI.Services
     {
         private readonly IMongoCollection<User> _users;
         private readonly IMongoCollection<Result> _results;
+        private readonly IMongoCollection<ArrowSpec> _specs;
 
         public ArcheryService(IConfiguration config)
         {
@@ -19,6 +20,7 @@ namespace ComptageTirAPI.Services
             var database = client.GetDatabase("comptage_tir");
             _users = database.GetCollection<User>("users");
             _results = database.GetCollection<Result>("results");
+            _specs = database.GetCollection<ArrowSpec>("specs");
         }
 
         #region Account
@@ -51,6 +53,31 @@ namespace ComptageTirAPI.Services
                 }
             }
         }
+        #endregion
+
+        #region Spec
+
+        public void AddSpec(ArrowSpec spec)
+        {
+            _specs.InsertOne(spec);
+        }
+
+        public List<ArrowSpec> GetSpecs(string user)
+        {
+            return _specs.Find(s => s.Owner == user).ToList();
+        }
+
+        public void ModifySpec(ArrowSpec spec)
+        {
+             spec.Specs = spec.Specs.OrderBy(s => s[0]).ToList();
+            _specs.ReplaceOne(s => s.Id == spec.Id, spec);
+        }
+
+        public void DeleteSpec(string id)
+        {
+            _specs.DeleteOne(s => s.Id == id);
+        }
+
         #endregion
 
         #region Results
